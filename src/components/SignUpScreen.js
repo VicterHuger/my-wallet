@@ -45,7 +45,7 @@ export default function SignUpScreen({formData,setFormData,setIsDisabled,isDisab
                 isDisabled={isDisabled} 
                 handleForm={handleForm}
                 inputName={<Input type="text" name="name" onChange={handleForm} placeholder="Nome" value={formData.name} disabled={isDisabled} isDisabled={isDisabled} required/>}
-                inputPasswordConfirm={<Input type="password" name="passwordRepeted" onChange={handleForm} placeholder="Confirme a senha" value={formData.passwordRepeted} disabled={isDisabled} isDisabled={isDisabled} required/>}
+                inputPasswordConfirm={<Input type="password" name="passwordRepeted" onChange={handleForm} placeholder="Confirme a senha" value={formData.passwordRepeted} disabled={isDisabled} isDisabled={isDisabled} required/>} authOperation='sign-up'
             />
         </AuthScreen>
     

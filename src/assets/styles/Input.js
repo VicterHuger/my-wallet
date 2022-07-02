@@ -9,6 +9,7 @@ const Input=styled.input`
     border: none;
     border-radius:5px;
     font-size:1.25rem;
+    color: #000000;
     &::placeholder{
         color:${props=>(props.isDisabled ? '#AFAFAF' : '#000000')};
         font-size:1.25rem;

@@ -14,10 +14,10 @@ const AuthStyle = styled.main`
         color:#FFFFFF;
         font-size: 2rem; //32px;
         font-family: 'Saira Stencil One', cursive;
-        margin-bottom:1.5rem;
+        margin-bottom:2.5rem;
     }
     &>a{
-        margin-top:2.25rem;
+        margin-top:1rem;
         height:fit-content;
     }
     &>a>h4{

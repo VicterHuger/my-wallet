@@ -2,8 +2,11 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import {useState} from 'react';
 
 import UserContext from "../contexts/UserContext";
+
 import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
+import UserHomePage from "./UserHomePage";
+
 import GlobalStyle from "../assets/styles/globalstyle";
 
 export default function App(){
@@ -57,8 +60,9 @@ export default function App(){
             <UserContext.Provider value={{userData}}>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<SignInScreen/>}/> 
+                        <Route path="/" element={<SignInScreen formData={formData} setFormData={setFormData} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} setUserData={setUserData}/>}/> 
                         <Route path="/sign-up" element={<SignUpScreen formData={formData} setFormData={setFormData} setIsDisabled={setIsDisabled} isDisabled={isDisabled}handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} />}/>
+                        <Route path="/home" element={<UserHomePage/>}/>
                         
                     </Routes>
                 </BrowserRouter>

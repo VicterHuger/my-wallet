@@ -5,13 +5,18 @@ import Input from '../assets/styles/Input.js';
 import Button from '../assets/styles/Button.js';
 
 
-export default function Form({formData, submitFunction, isDisabled, handleForm, inputName, inputPasswordConfirm}){
+export default function Form({formData, submitFunction, isDisabled, handleForm, inputName, inputPasswordConfirm,authOperation}){
     
     const buttonContent= ()=>{
         if(isDisabled){
             return (<ThreeDots heigth={13} width={51} radius={50} color="#FFFFFF" />);
         }else{
-            return "Cadastrar";
+            if(authOperation==='sign-up'){
+                return "Cadastrar";
+            }else{
+                return "Entrar";
+            }
+            
         }
     }
     
