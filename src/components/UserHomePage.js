@@ -96,6 +96,7 @@ export default function UserHomePage(){
         promise.then(res=>{
             window.localStorage.removeItem('user');
             setUserData({});
+            navigate('/');
         });
 
         promise.catch(err=>{setLoading(false); return alert(err.response.data)});
