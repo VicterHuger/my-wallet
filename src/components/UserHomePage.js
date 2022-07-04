@@ -27,40 +27,47 @@ export default function UserHomePage(){
     const [transactions,setTransactions]=useState(null);
     const [isPositive, setIsPositive]=useState(true);
     const [saldo,setSaldo]=useState(0);
+    const [isLogout, setIsLogout]=useState(false);
 
         if(!userData.token){
             navigate('/');
         }
 
         const getUserInfo=useCallback(()=>{
+            if(!isLogout){
+                const config={
+                    headers:{
+                        Authorization:`Bearer ${userData.token}`
+                    }
+                };
+            const promise=axios.get("https://api-wallet-back.herokuapp.com/user",config);
+    
+            promise.then(res=>{
+                return setName(res.data.name);
+            });
+    
+            promise.catch(err=>{setLoading(false); return alert(err.response.data)});
+            }
+            
+    },[]);
+
+    const getTransactionsInfos=useCallback(()=>{
+        if(!isLogout){
             const config={
                 headers:{
                     Authorization:`Bearer ${userData.token}`
                 }
             };
-        const promise=axios.get("https://api-wallet-back.herokuapp.com/user",config);
-
-        promise.then(res=>{
-            return setName(res.data.name);
-        });
-
-        promise.catch(err=>{setLoading(false); return alert(err.response.data)});
-    },[userData.token]);
-
-    const getTransactionsInfos=useCallback(()=>{
-        const config={
-            headers:{
-                Authorization:`Bearer ${userData.token}`
-            }
-        };
-        const promise=axios.get("https://api-wallet-back.herokuapp.com/transactions",config);
-
-        promise.then(res=>{
-            return setTransactions(res.data);
-        });
-
-        promise.catch(err=>{setLoading(false); return alert(err.response.data)});
-    },[userData.token]);
+            const promise=axios.get("https://api-wallet-back.herokuapp.com/transactions",config);
+    
+            promise.then(res=>{
+                return setTransactions(res.data);
+            });
+    
+            promise.catch(err=>{setLoading(false); return alert(err.response.data)});
+        }
+        
+    },[]);
     
     useEffect(()=>{
         getUserInfo();
@@ -96,6 +103,7 @@ export default function UserHomePage(){
         promise.then(res=>{
             window.localStorage.removeItem('user');
             setUserData({});
+            setIsLogout(true);
         });
 
         promise.catch(err=>{setLoading(false); return alert(err.response.data)});
