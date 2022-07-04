@@ -91,7 +91,7 @@ export default function UserHomePage(){
             }
         };
         
-        const promise=axios.delete("https://api-wallet-back.herokuapp.com/",config);
+        const promise=axios.delete("https://api-wallet-back.herokuapp.com/session",config);
 
         promise.then(res=>{
             window.localStorage.removeItem('user');
