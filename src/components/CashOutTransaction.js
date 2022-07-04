@@ -57,7 +57,7 @@ export default function EntryTransaction(){
             type: 'saida'
         }
 
-        const promise=axios.post("http://localhost:4000/transactions", body, config);
+        const promise=axios.post("https://git.heroku.com/api-wallet-back.git/transactions", body, config);
 
         promise.then(res=>{
 

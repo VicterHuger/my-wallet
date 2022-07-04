@@ -25,7 +25,7 @@ export default function SignUpScreen({formData,setFormData,setIsDisabled,isDisab
             password: formData.password,
         };  
          
-         axios.post("http://localhost:4000/sign-up",body)
+         axios.post("https://git.heroku.com/api-wallet-back.git/sign-up",body)
             .then(response=>{
                 if(response.status===201) alert('Cadastrado com sucesso!');
                 setIsDisabled(false);

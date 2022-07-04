@@ -38,7 +38,7 @@ export default function UserHomePage(){
                     Authorization:`Bearer ${userData.token}`
                 }
             };
-        const promise=axios.get("http://localhost:4000/user",config);
+        const promise=axios.get("https://git.heroku.com/api-wallet-back.git/user",config);
 
         promise.then(res=>{
             return setName(res.data.name);
@@ -53,7 +53,7 @@ export default function UserHomePage(){
                 Authorization:`Bearer ${userData.token}`
             }
         };
-        const promise=axios.get("http://localhost:4000/transactions",config);
+        const promise=axios.get("https://git.heroku.com/api-wallet-back.git/transactions",config);
 
         promise.then(res=>{
             return setTransactions(res.data);
@@ -91,7 +91,7 @@ export default function UserHomePage(){
             }
         };
         
-        const promise=axios.delete("http://localhost:4000/session",config);
+        const promise=axios.delete("https://git.heroku.com/api-wallet-back.git/session",config);
 
         promise.then(res=>{
             window.localStorage.removeItem('user');
