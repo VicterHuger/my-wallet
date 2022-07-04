@@ -29,7 +29,7 @@ export default function SignInScreen({formData,setFormData,isDisabled, setIsDisa
             password: formData.password,
         }
 
-        const promise=axios.post("https://git.heroku.com/api-wallet-back.git/sign-in", body);
+        const promise=axios.post("https://api-wallet-back.herokuapp.com/sign-in", body);
 
         promise.then(res=>{
 
