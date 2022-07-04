@@ -21,21 +21,23 @@ export default function UserHomePage(){
 
     const navigate=useNavigate();
 
-    const {userData}=useContext(UserContext);
+    const {userData, setUserData}=useContext(UserContext);
     const [loading,setLoading]=useState(false);
     const [name,setName]=useState(null);
     const [transactions,setTransactions]=useState(null);
+    const [isPositive, setIsPositive]=useState(true);
+    const [saldo,setSaldo]=useState(0);
 
-    if(!userData.token){
-        navigate('/');
-    }
+        if(!userData.token){
+            navigate('/');
+        }
 
-    const getUserInfo=useCallback(()=>{
-        const config={
-            headers:{
-                Authorization:`Bearer ${userData.token}`
-            }
-        };
+        const getUserInfo=useCallback(()=>{
+            const config={
+                headers:{
+                    Authorization:`Bearer ${userData.token}`
+                }
+            };
         const promise=axios.get("http://localhost:4000/user",config);
 
         promise.then(res=>{
@@ -63,9 +65,41 @@ export default function UserHomePage(){
     useEffect(()=>{
         getUserInfo();
         getTransactionsInfos();
-    },[getUserInfo,getTransactionsInfos]);
+        let newSaldo=0;
+        if(transactions){
+            transactions.forEach(item=>{
+                if(item.type==='saida'){
+                    newSaldo-=Number(item.value);
+                }else{
+                    newSaldo+=Number(item.value);
+                }
+                });
+            newSaldo=newSaldo.toFixed();
+            if(newSaldo>=0){
+                setIsPositive(true);
+            }else{
+                setIsPositive(false);
+            }
+            setSaldo(newSaldo);
+        }
+    },[getUserInfo,getTransactionsInfos,transactions]);
 
-    console.log(transactions);
+    function deleteSession(){
+        const config={
+            headers:{
+                Authorization:`Bearer ${userData.token}`
+            }
+        };
+        
+        const promise=axios.delete("http://localhost:4000/session",config);
+
+        promise.then(res=>{
+            window.localStorage.removeItem('user');
+            setUserData({});
+        });
+
+        promise.catch(err=>{setLoading(false); return alert(err.response.data)});
+    }
 
     function HomeScreenContent(){
         if(!name ){
@@ -98,7 +132,7 @@ export default function UserHomePage(){
                         <Content>
                             <Header> 
                                 <h2>Olá, {name}</h2>
-                                <ion-icon name="log-out-outline"></ion-icon>    
+                                <ion-icon onClick={ () => deleteSession() } name="log-out-outline"></ion-icon>    
                             </Header>
                             <TransactionsDiv isContentNull={transactions}>
                                 {!transactions 
@@ -108,14 +142,18 @@ export default function UserHomePage(){
                                  transactions.map((transaction,index)=>{
                                     return (<Transaction key={index} transaction={transaction} setLoading={setLoading}/>);
                                     })}
+                                <SaldoDiv>
+                                    <Saldo>Saldo</Saldo>
+                                    <Valor isPositive={isPositive}>{saldo}</Valor>
+                                </SaldoDiv>
                             </TransactionsDiv>
                             <Footer>
-                                <TransactionsOptions>
+                                <TransactionsOptions onClick={()=>navigate('/entry')}>
                                     <ion-icon name="add-circle-outline"></ion-icon>
                                     <h4>Nova Entrada</h4>
                                 </TransactionsOptions>
 
-                                <TransactionsOptions>
+                                <TransactionsOptions  onClick={()=>navigate('/exit')}>
                                     <ion-icon name="add-circle-outline"></ion-icon>
                                     <h4>Nova Saída</h4>  
                                 </TransactionsOptions>
@@ -134,6 +172,25 @@ export default function UserHomePage(){
             renderPageHomeScreen
     )
 }
+
+const SaldoDiv=styled.div`
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:absolute;
+bottom:10px;
+width:94%;
+`;
+const Saldo=styled.h4`
+font-weight:700;
+color:#000000;
+font-size:1rem;
+`;
+
+const Valor=styled.h4`
+color:${props=>(props.isPositive ? "#03AC00" : "#C70000")};
+font-size:1rem;
+`;
 
 const Content=styled.main`
     min-height:100vh;
@@ -181,6 +238,7 @@ const TransactionsDiv=styled.div`
         width:60%;
         text-align:center;
     }
+    position:relative;
 `;
 
 const Footer=styled.div`

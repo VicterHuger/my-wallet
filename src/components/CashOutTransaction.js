@@ -54,7 +54,7 @@ export default function EntryTransaction(){
         const body={
             value: parseFloat(formData.value),
             sumary: formData.sumary,
-            type: 'entrada'
+            type: 'saida'
         }
 
         const promise=axios.post("http://localhost:4000/transactions", body, config);
@@ -64,7 +64,7 @@ export default function EntryTransaction(){
             if(res.status===201){
                 setIsDisabled(false);
                 CleanInputs();
-                alert('Entrada computada!');
+                alert('Saida computada!');
                 navigate("/home");
            }
             
@@ -80,11 +80,11 @@ export default function EntryTransaction(){
     }
     return(
         <Content>
-            <h2>Nova Entrada</h2>
+            <h2>Nova Saída</h2>
             <FormStyle onSubmit={sendToAPi}>
                 <Input type="text" name="value" onChange={handleForm} placeholder="Valor" value={formData.value} disabled={isDisabled} isDisabled={isDisabled} required/>
                 <Input type="text" name="sumary" onChange={handleForm} placeholder="Descrição" value={formData.description} disabled={isDisabled} isDisabled={isDisabled} required/>
-                <Button type="submit" isDisabled={isDisabled}>Salvar entrada</Button>
+                <Button type="submit" isDisabled={isDisabled}>Salvar saída</Button>
             </FormStyle>
         </Content>
     )

@@ -6,6 +6,8 @@ import UserContext from "../contexts/UserContext";
 import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
 import UserHomePage from "./UserHomePage";
+import EntryTransaction from "./EntryTransaction.js";
+import CashOutTransaction from "./CashOutTransaction.js";
 
 import GlobalStyle from "../assets/styles/globalstyle";
 
@@ -57,14 +59,14 @@ export default function App(){
     return(
     <>
         <GlobalStyle/>
-            <UserContext.Provider value={{userData}}>
+            <UserContext.Provider value={{userData,setUserData}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<SignInScreen formData={formData} setFormData={setFormData} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} setUserData={setUserData}/>}/> 
                         <Route path="/sign-up" element={<SignUpScreen formData={formData} setFormData={setFormData} setIsDisabled={setIsDisabled} isDisabled={isDisabled}handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} />}/>
                         <Route path="/home" element={<UserHomePage />}/>
-                        {/* <Route path="/entry" element={<EntryTransaction/>}/>
-                        <Route path="/exit" element={<CashOutTransaction/>}/> */}
+                        <Route path="/entry" element={<EntryTransaction/>}/>
+                        <Route path="/exit" element={<CashOutTransaction/>}/>
 
                         
                     </Routes>
