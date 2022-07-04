@@ -91,12 +91,11 @@ export default function UserHomePage(){
             }
         };
         
-        const promise=axios.delete("https://git.heroku.com/api-wallet-back.git/session",config);
+        const promise=axios.delete("https://api-wallet-back.herokuapp.com/",config);
 
         promise.then(res=>{
             window.localStorage.removeItem('user');
             setUserData({});
-            navigate('/');
         });
 
         promise.catch(err=>{setLoading(false); return alert(err.response.data)});
