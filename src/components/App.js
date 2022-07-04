@@ -62,7 +62,10 @@ export default function App(){
                     <Routes>
                         <Route path="/" element={<SignInScreen formData={formData} setFormData={setFormData} isDisabled={isDisabled} setIsDisabled={setIsDisabled} handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} setUserData={setUserData}/>}/> 
                         <Route path="/sign-up" element={<SignUpScreen formData={formData} setFormData={setFormData} setIsDisabled={setIsDisabled} isDisabled={isDisabled}handleForm={handleForm} CleanInputs={CleanInputs} FailedRequest={FailedRequest} />}/>
-                        <Route path="/home" element={<UserHomePage/>}/>
+                        <Route path="/home" element={<UserHomePage />}/>
+                        {/* <Route path="/entry" element={<EntryTransaction/>}/>
+                        <Route path="/exit" element={<CashOutTransaction/>}/> */}
+
                         
                     </Routes>
                 </BrowserRouter>

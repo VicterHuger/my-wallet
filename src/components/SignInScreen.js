@@ -12,7 +12,7 @@ export default function SignInScreen({formData,setFormData,isDisabled, setIsDisa
         const itemStorage=localStorage.getItem("user");
         if(itemStorage!==null){
             setUserData(JSON.parse(itemStorage));
-            navigate("/hoje");         
+            navigate("/home");         
         }
     },[navigate,setUserData]);
 
@@ -32,7 +32,6 @@ export default function SignInScreen({formData,setFormData,isDisabled, setIsDisa
         const promise=axios.post("http://localhost:4000/sign-in", body);
 
         promise.then(res=>{
-            
 
             if(res.status===202){
                 const userData={
